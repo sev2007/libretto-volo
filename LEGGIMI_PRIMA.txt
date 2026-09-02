@@ -1,0 +1,46 @@
+LIBRETTO VOLO MULTIPIATTAFORMA - PACCHETTO COMPLETO v1.0.2
+=================================================================
+
+PERCORSO CONSIGLIATO
+--------------------
+GitHub privato -> Vercel -> Supabase -> Mac e iPad
+
+IMPORTANTE
+----------
+1. Lo ZIP si estrae e si gestisce dal Mac.
+2. Sul Mac puoi provare subito l'app con Avvia-su-Mac.command.
+3. L'iPad NON puo' installare direttamente questo ZIP.
+4. Per usare l'app su Mac e iPad devi pubblicarla su un indirizzo HTTPS.
+5. Usa in Supabase soltanto la Publishable key sb_publishable_...
+6. Non usare mai service_role o sb_secret_.
+7. Accedi con lo stesso account Supabase su tutti i dispositivi.
+8. Prima della prima sincronizzazione crea un backup JSON.
+
+ORDINE CORRETTO
+---------------
+A. Estrai lo ZIP.
+B. Prova l'app sul Mac.
+C. Crea il progetto Supabase.
+D. Esegui supabase/NUOVO_PROGETTO_ESEGUI_QUESTO.sql.
+E. Carica i file in un repository GitHub privato.
+F. Pubblica il repository con Vercel.
+G. Imposta in Supabase il Site URL uguale all'indirizzo Vercel.
+H. Installa l'app web sul Mac.
+I. Configura Supabase e sincronizza il Mac principale.
+J. Installa l'app web sull'iPad.
+K. Accedi con lo stesso account e sincronizza l'iPad.
+
+GUIDA DETTAGLIATA
+-----------------
+Apri il file GUIDA_COMPLETA_INSTALLAZIONE.md.
+
+FILE SQL
+--------
+Nuovo progetto:
+supabase/NUOVO_PROGETTO_ESEGUI_QUESTO.sql
+
+Aggiornamento di un vecchio progetto v1.0.0:
+supabase/SOLO_AGGIORNAMENTO_DA_V1.0.0.sql
+
+Verifica senza modificare dati:
+supabase/VERIFICA_INSTALLAZIONE.sql

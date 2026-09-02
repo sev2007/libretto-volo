@@ -1,0 +1,62 @@
+LIBRETTO VOLO MULTIPIATTAFORMA - INVENTARIO PACCHETTO v1.0.2
+Generato: 2 settembre 2026
+
+Il pacchetto contiene il codice completo, le risorse, gli script di avvio,
+le guide, i test e i file SQL per Supabase.
+
+ELENCO FILE (percorso relativo | byte | SHA-256)
+------------------------------------------------
+.github/workflows/pages.yml | 942 | 33d9e971b563a0c6d8d28ffdbeb38ec97eca9ad3d15dde04ff42ace40e6e5f95
+.gitignore | 103 | ce9d3f8bba18f0e27dd398204960ba6f2fc80862f2a0807384205c7567ce86d9
+.nojekyll | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+.vercelignore | 214 | fbce2451fc668a99d79524bee74e2b5fd9a1129871a543fa941d89b2ed37a783
+Avvia-su-Mac.command | 469 | 51b2db53902cb7976f05eb4efd3e83564e096303c4aed3617fb73e9870483253
+CHANGELOG.md | 1216 | 7000ce9341a5f63564464055ae00a408bc35977df1432dc054c188c3b4ad23cc
+GUIDA_COMPLETA_INSTALLAZIONE.md | 11958 | 9f81653f099e9088c237011398d93b60b6f07f1545ff93f1d95d19ed058a49c3
+LEGGIMI_PRIMA.txt | 1510 | 02beff546f929c2e7620b3bae877418e4600eafce37cfa9c88a5fe664128aed0
+README.md | 1666 | fd308febdf9a96fde63c96f15ca4fd03d9f101b944923c571a1995022cc3d80c
+assets/Logsummary_esempio.xlsx | 17139 | e714fd8e8e6582c32b7f87b58b4aa7bd114c8a057c0f8ae6b71be120fcb46635
+assets/Modello_Libretto.xlsx | 25197 | c2f9b55f2bf218238ee6b30df4ea6d1d206c1897cf896431a425812ccba98237
+assets/app-icon-192.png | 10346 | 1dc0532c917593129bedee75a5647082734eb4fa75555d2dfb0197cee382a176
+assets/app-icon-512.png | 34614 | 4336de0f3e406a6edf91252e048becf8526d6c1800739615f3fa79f11684427c
+assets/app-icon.svg | 671 | 9186119fc71863726ce45a82fd5c4c804d04c82a55ff2411c605970402333bc2
+assets/cockpit.jpeg | 348786 | 9164f07d09431738dc0a4b0391b8b949c683e5c6ca10cf517548d711cf257d2e
+avvia-su-linux.sh | 390 | 208dec9817a7529ef2e6e0dd6efa6e5f9216e243d4b311faeebfac53154c67db
+avvia-su-windows.bat | 549 | 9fa11efc7a7605e3ab41d50cd5cba4f251deec58f698a32453f8de1694c101d1
+config.example.js | 691 | 115b554f25ef2b513fb2409ce3a2df5bc362cdbc3866a3b5d6788c172c5b6881
+config.js | 602 | ec82d49ea370712407e56e13ce38c31e1e198e4dbc7ed86ae0fedaaf8ab9b505
+docs/ARCHITETTURA.md | 2436 | f70176275b0564a3307d1e627651cd92ade7fa7f0fa08efc7bc76dabdc48e47f
+docs/INSTALLAZIONE_IPAD.md | 420 | 7fcfd2936e150d8b5984a4a471ce2a63fe55fcc45284622572888ebc9390e4b6
+docs/INSTALLAZIONE_MAC.md | 498 | df8fd0bf957fb0300e243769c62636136c3e6d55b9ad3572b143ac3584a06386
+docs/PUBBLICAZIONE_GITHUB_VERCEL.md | 681 | 5f3e2d7d48b754337eab3b3a863b733f2e8f7857bac60201686f7719b4fd4b70
+docs/QA_REPORT.md | 4185 | 4a3eaa9e4ea9a8b7233e90a0691e3520950ca4a00e2c93a22d381ec9b76769d4
+docs/SUPABASE.md | 1072 | 17452dec4d0649b807eb1583a38968fadc165be88e5d69136d94c26badaa711b
+index.html | 20324 | 0f64863c3407994eccce51eb136114df6613920e82227cdbbfce568f981127a6
+manifest.webmanifest | 756 | ea3570a5e86704f2ce86575ce67bcf0b5f5ba7b299dc455adcc9b8b309151aba
+package.json | 483 | d209395fd8bdc3c2b2d6af65b27fa734f190062f2b21b691c027bc3dbc74c54f
+robots.txt | 26 | 331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1
+service-worker.js | 1882 | cb3010041c176386294939153b576239f996b6654ba25236c89143c171a535d4
+src/app.js | 43916 | f81896e8a7c5c46f799cf460f50f7ba2036177b9b7fb54850973790b83e49bca
+src/db.js | 13291 | 63e5ad9f3cf7769122680914783505d0dc3253c6a3317f28c1e694b8b33702ae
+src/icons.js | 4175 | f2c4aa2d4b512e1b2336bc3c7f253da5a7034c0fdc242faf7bcc0fc71673980d
+src/pdf.js | 17964 | af117fb7de701f349d6b85de6bf09632b5147394896665039a4984d8a5b16913
+src/styles.css | 24384 | 67b41ebcc3214826675e46a88588948751d129e5f760a5354af9c1016d984f13
+src/supabase.js | 12470 | b804669170e8d3449eeaf8402c03e39df69d2b427a29f4fbf7b45d9988566738
+src/sync.js | 4016 | 23f06505246a11d3ae2cdf0f4936272b9ac2ca33d5c1e2995520d923f0ebe72a
+src/utils.js | 9529 | 87835abcf5f3fd31863abf155728b2585f5da73ad048b86c517d68d6b91d38c7
+src/xlsx.js | 24001 | fd28dbed5cf25bba9d7e3fbc9f53c0e4328ef3500612239bee0b2d39bdc46406
+supabase/NUOVO_PROGETTO_ESEGUI_QUESTO.sql | 7705 | 88b63386a8ab6f206b09dafa830c0e593fc65e63aab06da326d71b223566b177
+supabase/SOLO_AGGIORNAMENTO_DA_V1.0.0.sql | 2685 | 879f8ed285a2100a003e19dc03662bffe8f4c9a68e315772cf42e9604c22cfd9
+supabase/VERIFICA_INSTALLAZIONE.sql | 1671 | 0462ff2df7bdeee4e3390c42a519517f67d269ccc11331dfb5e652e9d9824d04
+supabase/migrations/001_initial_schema.sql | 7705 | 88b63386a8ab6f206b09dafa830c0e593fc65e63aab06da326d71b223566b177
+supabase/migrations/002_opening_balance.sql | 2685 | 879f8ed285a2100a003e19dc03662bffe8f4c9a68e315772cf42e9604c22cfd9
+tests/browser_qa.py | 11645 | d8bdce59bb403bddf20c89f84687ccaa4ab8772acc82ed34de3a36cc8a2c7489
+tests/generate-artifacts.mjs | 5411 | 4f700c625ef03adfa365214601e5e38ad6756c0cd08ba5eb9f54e04c049bd61e
+tests/static_audit.py | 1809 | 5f1e8b9181a9d460f138381597133f1e11c41f2cc330c3465b2c4801bcd808c4
+tests/validate_exports.py | 2004 | 9fb46fc3eea95c4c492271f350d79263f8fba7cf640000a2da610ecae56b0a19
+tools/server.mjs | 2419 | e4b6fc840ea874343933efe7a6e4c87a35e20a8f41855ec62fabf56db8806374
+vendor/JSZIP-LICENSE.md | 33753 | 566c953c6090b1218ca6217dd7359d45dde46581968586dc607d59a78af6a9c4
+vendor/jszip.min.js | 97630 | acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e
+vercel.json | 593 | d65b9e4e47691e79361b2b242b33fc75cf22556b260f2a88eecd234c4c32cb72
+
+Nota: questo stesso file inventario non include il proprio hash.

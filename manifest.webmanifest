@@ -1,0 +1,20 @@
+{
+  "name": "Libretto Volo",
+  "short_name": "Libretto Volo",
+  "description": "Libretto di volo multipiattaforma, offline e sincronizzabile con Supabase.",
+  "lang": "it-IT",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07151f",
+  "theme_color": "#07151f",
+  "icons": [
+    { "src": "./assets/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./assets/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Nuovo volo", "short_name": "Nuovo volo", "url": "./?action=new", "icons": [{ "src": "./assets/app-icon-192.png", "sizes": "192x192" }] }
+  ]
+}

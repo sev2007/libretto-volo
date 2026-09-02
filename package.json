@@ -1,0 +1,10 @@
+{
+  "name": "libretto-volo-multipiattaforma",
+  "version": "1.0.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check config.js && node --check service-worker.js && node --check src/app.js && node --check src/db.js && node --check src/icons.js && node --check src/pdf.js && node --check src/supabase.js && node --check src/sync.js && node --check src/utils.js && node --check src/xlsx.js",
+    "qa:artifacts": "node tests/generate-artifacts.mjs"
+  }
+}

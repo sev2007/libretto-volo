@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07151f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Libretto Volo">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="Libretto di volo multipiattaforma, offline e sincronizzabile con Supabase.">
+  <title>Libretto Volo</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/app-icon-192.png">
+  <link rel="stylesheet" href="./src/styles.css">
+  <script src="./vendor/jszip.min.js"></script>
+  <script src="./config.js"></script>
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <noscript>Questa applicazione richiede JavaScript.</noscript>
+  <div class="app-background" aria-hidden="true"></div>
+  <div id="app" class="app-shell">
+    <header class="hero glass-panel">
+      <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M57 31 36 23 34 8c-.3-2-1.3-4-2-4s-1.7 2-2 4l-2 15-21 8c-2 .8-3 2-3 3l24-2 1 14-7 6v3l10-3 10 3v-3l-7-6 1-14 24 2c0-1-1-2.2-3-3Z"/></svg></div>
+      <div class="hero-copy"><p class="eyebrow">REGISTRO PERSONALE</p><h1>LIBRETTO VOLO</h1><p>Un solo archivio su Mac, Windows, iPhone, iPad e Android.</p></div>
+      <div class="hero-actions">
+        <button id="sync-button" class="icon-button" type="button" title="Sincronizza" aria-label="Sincronizza"><span data-icon="sync"></span></button>
+        <button id="settings-button" class="icon-button" type="button" title="Impostazioni" aria-label="Impostazioni"><span data-icon="settings"></span></button>
+      </div>
+      <div id="connection-badge" class="connection-badge" role="status">Locale</div>
+    </header>
+
+    <main>
+      <section class="summary-grid" aria-label="Riepilogo">
+        <article class="summary-card glass-panel"><div class="summary-icon"><span data-icon="plane"></span></div><div><p>Voli registrati</p><strong id="summary-flights">0</strong></div></article>
+        <article class="summary-card glass-panel"><div class="summary-icon"><span data-icon="clock"></span></div><div><p>Tempo totale con saldo iniziale</p><strong id="summary-time">0:00</strong></div></article>
+        <article class="summary-card glass-panel"><div class="summary-icon"><span data-icon="calendar"></span></div><div><p>Ultimo volo</p><strong id="summary-last">-</strong></div></article>
+        <article class="summary-card glass-panel"><div class="summary-icon"><span data-icon="cloud"></span></div><div><p>Sincronizzazione</p><strong id="summary-sync">Solo locale</strong></div></article>
+      </section>
+
+      <section class="action-panel glass-panel">
+        <div class="section-heading"><div><p class="eyebrow">AZIONI RAPIDE</p><h2>Tutto a portata di un tocco</h2></div></div>
+        <div class="action-grid">
+          <button id="new-flight-button" class="action-tile accent-green" type="button"><span class="tile-icon" data-icon="plus"></span><span><strong>Nuovo volo</strong><small>Inserimento guidato</small></span></button>
+          <button id="import-button" class="action-tile accent-cyan" type="button"><span class="tile-icon" data-icon="upload"></span><span><strong>Importa Excel</strong><small>Uno o piu Logsummary</small></span></button>
+          <button id="pdf-button" class="action-tile accent-orange" type="button"><span class="tile-icon" data-icon="pdf"></span><span><strong>Genera PDF</strong><small>A3 orizzontale, altezza 15 cm</small></span></button>
+          <button id="print-button" class="action-tile accent-purple" type="button"><span class="tile-icon" data-icon="print"></span><span><strong>Stampa</strong><small>Stesso formato del PDF</small></span></button>
+          <button id="excel-button" class="action-tile accent-blue" type="button"><span class="tile-icon" data-icon="table"></span><span><strong>Esporta Excel</strong><small>Modello originale</small></span></button>
+          <button id="history-button" class="action-tile accent-indigo" type="button"><span class="tile-icon" data-icon="history"></span><span><strong>Storico</strong><small>Importazioni e duplicati</small></span></button>
+          <button id="trash-button" class="action-tile accent-red" type="button"><span class="tile-icon" data-icon="trash"></span><span><strong>Cestino</strong><small>Ripristina o elimina</small></span></button>
+          <button id="backup-button" class="action-tile accent-teal" type="button"><span class="tile-icon" data-icon="backup"></span><span><strong>Backup</strong><small>Esporta archivio JSON</small></span></button>
+        </div>
+      </section>
+
+      <section class="register-panel glass-panel">
+        <div class="register-heading">
+          <div><p class="eyebrow">REGISTRO VOLI</p><h2 id="register-title">Nessun volo</h2></div>
+          <label class="search-box"><span data-icon="search"></span><input id="search-input" type="search" placeholder="Cerca tratta, pilota, marche o note" autocomplete="off"></label>
+        </div>
+        <div id="empty-state" class="empty-state"><div class="empty-icon"><span data-icon="plane"></span></div><h3>L'archivio voli e vuoto</h3><p>Il saldo iniziale e gia registrato. Importa un Logsummary oppure aggiungi il primo volo manualmente.</p><button id="empty-new-button" class="primary-button" type="button"><span data-icon="plus"></span> Aggiungi il primo volo</button></div>
+        <div id="flight-table-wrapper" class="flight-table-wrapper" hidden><table class="flight-table"><thead><tr><th>Data</th><th>Tratta</th><th>Orari</th><th>Durata</th><th>Aeromobile</th><th>PIC / DUAL</th><th>Note</th><th class="actions-column">Azioni</th></tr></thead><tbody id="flight-table-body"></tbody></table></div>
+        <div id="flight-card-list" class="flight-card-list" hidden></div>
+      </section>
+    </main>
+  </div>
+
+  <input id="import-input" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple hidden>
+  <input id="restore-input" type="file" accept=".json,application/json" hidden>
+
+  <dialog id="flight-dialog" class="app-dialog wide-dialog">
+    <form id="flight-form" method="dialog" novalidate>
+      <div class="dialog-header"><div><p class="eyebrow" id="flight-dialog-eyebrow">NUOVO VOLO</p><h2 id="flight-dialog-title">Inserimento guidato</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog="flight-dialog" aria-label="Chiudi"><span data-icon="close"></span></button></div>
+      <div class="form-layout">
+        <section class="form-section route-section">
+          <div class="form-section-title"><span data-icon="route"></span><div><h3>Volo</h3><p>Data, aeroporti e orari</p></div></div>
+          <div class="field-grid three-columns">
+            <label class="field"><span>Data</span><input id="flight-date" name="flightDate" type="date" required></label>
+            <label class="field"><span>Ora partenza</span><input id="departure-time" name="departureTime" type="time" required></label>
+            <label class="field"><span>Ora arrivo</span><input id="arrival-time" name="arrivalTime" type="time" required></label>
+          </div>
+          <div class="route-grid">
+            <label class="field airport-field"><span>Partenza</span><input id="departure-place" name="departurePlace" type="text" maxlength="30" placeholder="LILB" autocapitalize="characters" required></label>
+            <div class="route-arrow" aria-hidden="true"><span data-icon="arrow"></span></div>
+            <label class="field airport-field"><span>Arrivo</span><input id="arrival-place" name="arrivalPlace" type="text" maxlength="30" placeholder="LIDT" autocapitalize="characters" required></label>
+          </div>
+          <div class="duration-banner"><span data-icon="clock"></span><span>Durata calcolata</span><strong id="calculated-duration">1:00</strong></div>
+        </section>
+
+        <section class="form-section">
+          <div class="form-section-title"><span data-icon="aircraft"></span><div><h3>Aeromobile</h3><p>Dati proposti automaticamente</p></div></div>
+          <div class="field-grid three-columns">
+            <label class="field"><span>Modello</span><input id="aircraft-model" name="aircraftModel" type="text" maxlength="40" required></label>
+            <label class="field"><span>Marche</span><input id="registration" name="registration" type="text" maxlength="20" autocapitalize="characters" required></label>
+            <label class="toggle-field"><input id="single-engine" name="singleEngine" type="checkbox"><span class="switch"></span><span>Monomotore (SE)</span></label>
+          </div>
+          <div class="field-grid two-columns">
+            <label class="field"><span>Tempo plurimotore ME</span><input id="multi-engine" name="multiEngineMinutes" class="duration-input" type="text" inputmode="numeric" placeholder="0:00"></label>
+            <label class="field"><span>Nome pilota</span><input id="pilot-name" name="pilotName" type="text" maxlength="80" required></label>
+          </div>
+        </section>
+
+        <section class="form-section role-section">
+          <div class="form-section-title"><span data-icon="pilot"></span><div><h3>Funzione del pilota</h3><p>Scegli dove attribuire il tempo principale</p></div></div>
+          <div class="role-selector" role="radiogroup" aria-label="Tempo principale">
+            <label class="role-option"><input type="radio" name="primaryRole" value="PIC" checked><span><strong>PIC</strong><small>Pilota comandante</small></span></label>
+            <label class="role-option"><input type="radio" name="primaryRole" value="DUAL"><span><strong>DUAL</strong><small>Doppio comando</small></span></label>
+            <label class="role-option"><input type="radio" name="primaryRole" value="MANUAL"><span><strong>Manuale</strong><small>Valori indipendenti</small></span></label>
+          </div>
+          <p id="dual-rule-note" class="inline-note" hidden>In modifica, selezionando DUAL il valore PIC viene trasferito in DUAL e PIC viene cancellato.</p>
+          <div class="field-grid four-columns time-grid">
+            <label class="field"><span>PIC</span><input id="pic-time" class="duration-input" name="picMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+            <label class="field"><span>Copilota</span><input id="copilot-time" class="duration-input" name="copilotMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+            <label class="field"><span>DUAL</span><input id="dual-time" class="duration-input" name="dualMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+            <label class="field"><span>Istruttore</span><input id="instructor-time" class="duration-input" name="instructorMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+          </div>
+          <div class="field-grid four-columns time-grid">
+            <label class="field"><span>Notte</span><input id="night-time" class="duration-input" name="nightMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+            <label class="field"><span>IFR</span><input id="ifr-time" class="duration-input" name="ifrMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+            <label class="field"><span>Atterraggi giorno</span><input id="day-landings" name="dayLandings" type="number" min="0" max="99" step="1"></label>
+            <label class="field"><span>Atterraggi notte</span><input id="night-landings" name="nightLandings" type="number" min="0" max="99" step="1"></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="form-section-title"><span data-icon="note"></span><div><h3>Simulatore e note</h3><p>Campi facoltativi</p></div></div>
+          <div class="field-grid three-columns">
+            <label class="field"><span>Data simulatore</span><input id="simulator-date" name="simulatorDate" type="date"></label>
+            <label class="field"><span>Tipo simulatore</span><input id="simulator-type" name="simulatorType" type="text" maxlength="40"></label>
+            <label class="field"><span>Tempo simulatore</span><input id="simulator-time" class="duration-input" name="simulatorMinutes" type="text" inputmode="numeric" placeholder="0:00"></label>
+          </div>
+          <label class="field"><span>Note e annotazioni</span><textarea id="remarks" name="remarks" rows="3" maxlength="500" placeholder="Annotazioni, addestramento, firma..."></textarea></label>
+        </section>
+      </div>
+      <div id="flight-form-error" class="form-error" role="alert" hidden></div>
+      <div class="dialog-actions sticky-actions"><button type="button" class="secondary-button" data-close-dialog="flight-dialog">Annulla</button><button id="save-flight-button" type="submit" class="primary-button"><span data-icon="save"></span> Salva volo</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="settings-dialog" class="app-dialog settings-dialog">
+    <form id="settings-form" method="dialog">
+      <div class="dialog-header"><div><p class="eyebrow">IMPOSTAZIONI</p><h2>Archivio e sincronizzazione</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog="settings-dialog" aria-label="Chiudi"><span data-icon="close"></span></button></div>
+      <div class="settings-stack">
+        <section class="settings-card"><h3>Dati predefiniti</h3><div class="field-grid three-columns"><label class="field"><span>Pilota</span><input id="setting-pilot" type="text"></label><label class="field"><span>Aeromobile</span><input id="setting-aircraft" type="text"></label><label class="field"><span>Marche</span><input id="setting-registration" type="text"></label></div></section>
+        <section class="settings-card"><h3>Saldo iniziale del libretto</h3><p class="settings-help">E un record permanente del database, separato dai voli. Viene usato come base dei conteggi e nella riga 21 della prima pagina di Excel, PDF e stampa.</p><div class="field-grid five-columns"><label class="field"><span>K21 - Tempo totale</span><input id="setting-base-total" class="duration-input" type="text"></label><label class="field"><span>M21 - Atterraggi</span><input id="setting-base-landings" type="number" min="0"></label><label class="field"><span>Q21 - PIC</span><input id="setting-base-pic" class="duration-input" type="text"></label><label class="field"><span>S21 - DUAL</span><input id="setting-base-dual" class="duration-input" type="text"></label><label class="field"><span>T21 - Istruttore</span><input id="setting-base-instructor" class="duration-input" type="text"></label></div></section>
+        <section class="settings-card">
+          <div class="settings-title-row"><div><h3>Supabase</h3><p class="settings-help">Facoltativo: senza questi dati l'app resta completamente locale e offline.</p></div><span id="settings-auth-badge" class="status-pill">Non configurato</span></div>
+          <div class="field-grid two-columns"><label class="field"><span>Project URL</span><input id="setting-supabase-url" type="url" placeholder="https://xxxx.supabase.co"></label><label class="field"><span>Publishable key</span><input id="setting-supabase-key" type="password" autocomplete="off" placeholder="sb_publishable_..."></label></div>
+          <div class="settings-button-row"><button id="auth-open-button" type="button" class="secondary-button"><span data-icon="user"></span> Accedi / crea account</button><button id="signout-button" type="button" class="secondary-button" hidden>Esci dall'account</button><button id="test-connection-button" type="button" class="secondary-button"><span data-icon="cloud"></span> Verifica collegamento</button></div>
+        </section>
+        <section class="settings-card danger-card"><h3>Manutenzione archivio</h3><div class="settings-button-row"><button id="restore-backup-button" type="button" class="secondary-button"><span data-icon="upload"></span> Ripristina backup JSON</button><button id="clear-database-button" type="button" class="danger-button"><span data-icon="trash"></span> Svuota database locale</button></div></section>
+      </div>
+      <div class="dialog-actions sticky-actions"><button type="button" class="secondary-button" data-close-dialog="settings-dialog">Chiudi</button><button type="submit" class="primary-button"><span data-icon="save"></span> Salva impostazioni</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="auth-dialog" class="app-dialog compact-dialog">
+    <form id="auth-form" method="dialog">
+      <div class="dialog-header"><div><p class="eyebrow">SUPABASE</p><h2>Accesso al tuo archivio</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog="auth-dialog" aria-label="Chiudi"><span data-icon="close"></span></button></div>
+      <div class="auth-tabs" role="tablist"><button id="signin-tab" type="button" class="auth-tab active" data-auth-mode="signin">Accedi</button><button id="signup-tab" type="button" class="auth-tab" data-auth-mode="signup">Crea account</button></div>
+      <div class="field-stack"><label class="field"><span>Email</span><input id="auth-email" type="email" autocomplete="email" required></label><label class="field"><span>Password</span><input id="auth-password" type="password" minlength="6" autocomplete="current-password" required></label></div>
+      <p id="auth-message" class="inline-note">L'account serve solo per sincronizzare i dati tra dispositivi.</p>
+      <div class="dialog-actions"><button type="button" class="secondary-button" data-close-dialog="auth-dialog">Annulla</button><button id="auth-submit-button" type="submit" class="primary-button">Accedi</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="history-dialog" class="app-dialog wide-dialog"><div class="dialog-header"><div><p class="eyebrow">STORICO</p><h2>Importazioni effettuate</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog="history-dialog" aria-label="Chiudi"><span data-icon="close"></span></button></div><div id="history-content" class="dialog-scroll-content"></div><div class="dialog-actions"><button type="button" class="primary-button" data-close-dialog="history-dialog">Chiudi</button></div></dialog>
+  <dialog id="trash-dialog" class="app-dialog wide-dialog"><div class="dialog-header"><div><p class="eyebrow">CESTINO</p><h2>Voli eliminati</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog="trash-dialog" aria-label="Chiudi"><span data-icon="close"></span></button></div><div id="trash-content" class="dialog-scroll-content"></div><div class="dialog-actions"><button type="button" class="primary-button" data-close-dialog="trash-dialog">Chiudi</button></div></dialog>
+  <dialog id="confirm-dialog" class="app-dialog compact-dialog confirm-dialog"><div class="confirm-icon"><span data-icon="warning"></span></div><h2 id="confirm-title">Conferma operazione</h2><p id="confirm-message"></p><div class="dialog-actions"><button id="confirm-cancel" type="button" class="secondary-button">Annulla</button><button id="confirm-accept" type="button" class="danger-button">Elimina</button></div></dialog>
+  <dialog id="result-dialog" class="app-dialog compact-dialog"><div class="dialog-header"><div><p class="eyebrow">RISULTATO</p><h2 id="result-title">Operazione completata</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog="result-dialog" aria-label="Chiudi"><span data-icon="close"></span></button></div><div id="result-content" class="result-content"></div><div class="dialog-actions"><button type="button" class="primary-button" data-close-dialog="result-dialog">OK</button></div></dialog>
+
+  <div id="busy-overlay" class="busy-overlay" hidden aria-live="polite" aria-busy="true"><div class="busy-card"><div class="spinner"></div><strong id="busy-message">Operazione in corso</strong></div></div>
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
