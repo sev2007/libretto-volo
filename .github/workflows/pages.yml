@@ -1,1 +1,40 @@
+name: Pubblica Libretto Volo su GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v6
+      - name: Prepara il sito statico
+        run: |
+          mkdir _site
+          cp index.html config.js manifest.webmanifest service-worker.js robots.txt .nojekyll _site/
+          cp -R src assets vendor _site/
+      - name: Configura GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Carica il sito statico
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "_site"
+      - name: Pubblica
+        id: deployment
+        uses: actions/deploy-pages@v4
 
