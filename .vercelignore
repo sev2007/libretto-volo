@@ -1,0 +1,16 @@
+.git
+.github
+docs
+supabase
+tests
+tools
+qa-output
+Avvia-su-Mac.command
+avvia-su-windows.bat
+avvia-su-linux.sh
+LEGGIMI_PRIMA.txt
+GUIDA_COMPLETA_INSTALLAZIONE.md
+FILE_DEL_PACCHETTO.txt
+CHANGELOG.md
+README.md
+*.sha256
